@@ -129,6 +129,24 @@ npm run dev
 http://localhost:3000
 ```
 
+## GitHub Pages
+
+Репозиторий содержит отдельный GitHub Actions workflow для публикации статической landing-страницы на GitHub Pages:
+
+```txt
+.github/workflows/pages.yml
+```
+
+Команда для локальной сборки Pages-версии:
+
+```bash
+npm run build:pages
+```
+
+Она создаёт папку `out` со статическим `index.html`.
+
+Важно: GitHub Pages не выполняет server-side API routes. Поэтому Pages-версия — публичная страница проекта. Полный диагностический workflow с OpenAI API нужно запускать локально или деплоить на платформу с серверным runtime, например Vercel, Netlify или Cloudflare.
+
 ## Проверки
 
 ```bash
