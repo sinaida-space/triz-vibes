@@ -303,4 +303,4 @@ OpenAI помогает перевести эту мутную формулир�
 Created by **sin.ai.da**  
 Website: [sinaida.eu](https://sinaida.eu)
 
-© 2026 sin.ai.da. All rights reserved.
+© 2026 sin.ai.da. Licensed under the Apache License 2.0.
