@@ -2,20 +2,8 @@ import { mkdir, rm, writeFile } from "node:fs/promises";
 
 const outDir = new URL("../out/", import.meta.url);
 
-const html = String.raw`<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Противоречие — ТРИЗ-инструмент для AI-криэйторов</title>
-    <meta
-      name="description"
-      content="Русскоязычный ТРИЗ-инструмент для цифровых художников и AI-криэйторов: от творческого блока к противоречию, ИКР, плану и карте решения."
-    />
-    <meta property="og:title" content="Противоречие" />
-    <meta property="og:description" content="Хватит перебирать варианты. Найдите противоречие." />
-    <meta property="og:type" content="website" />
-    <style>
+// Shared styles for every generated page.
+const css = String.raw`
       :root {
         --paper: #f3ead7;
         --paper-deep: #e4d3b2;
@@ -376,7 +364,23 @@ const html = String.raw`<!doctype html>
           display: none;
         }
       }
-    </style>
+`;
+
+const html = String.raw`<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Противоречие — ТРИЗ-инструмент для AI-криэйторов</title>
+    <meta
+      name="description"
+      content="Русскоязычный ТРИЗ-инструмент для цифровых художников и AI-криэйторов: от творческого блока к противоречию, ИКР, плану и карте решения."
+    />
+    <meta property="og:title" content="Противоречие" />
+    <meta property="og:description" content="Хватит перебирать варианты. Найдите противоречие." />
+    <meta property="og:type" content="website" />
+    <style>
+${css}    </style>
   </head>
   <body>
     <div class="shell">
@@ -500,6 +504,7 @@ const html = String.raw`<!doctype html>
           <div class="footer-links">
             <a href="https://github.com/sinaida-space/triz-vibes">GitHub</a>
             <a href="https://sinaida.eu">sinaida.eu</a>
+            <a href="privacy.html">Приватность</a>
           </div>
         </div>
       </footer>
@@ -507,9 +512,107 @@ const html = String.raw`<!doctype html>
   </body>
 </html>`;
 
+const privacyExtra = String.raw`
+      .doc {
+        max-width: 760px;
+        padding: clamp(40px, 6vw, 80px) 0;
+        line-height: 1.7;
+      }
+
+      .doc h2 {
+        font-size: 1.25rem;
+        margin: 2.2rem 0 0.6rem;
+      }
+
+      .doc p,
+      .doc li {
+        color: var(--muted);
+      }
+
+      .doc a {
+        color: var(--stamp);
+        text-decoration: underline;
+      }
+
+      .doc .updated {
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+`;
+
+const privacyHtml = String.raw`<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Приватность · Противоречие</title>
+    <meta name="description" content="Как сайт «Противоречие» обращается с данными: без аналитики, cookies и сторонних запросов." />
+    <style>
+${css}${privacyExtra}    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <nav>
+          <a class="brand" href="index.html">
+            <span class="brand-mark">▣</span>
+            <span>Противоречие</span>
+          </a>
+        </nav>
+      </header>
+
+      <main class="wrap doc">
+        <h1>Приватность</h1>
+        <p class="updated">Обновлено 7&nbsp;ноября 2026</p>
+
+        <p>Это статический сайт без форм, аккаунтов, аналитики и&nbsp;cookies. Он ничего не&nbsp;просит у&nbsp;вас и&nbsp;ничего о&nbsp;вас не&nbsp;записывает.</p>
+
+        <h2>Кто отвечает</h2>
+        <p>Сайт ведёт Sinaida Krivchenko, Прага, Чехия. С&nbsp;вопросами о&nbsp;приватности пишите через <a href="https://sinaida.eu/privacy/#contact-me">sinaida.eu/privacy</a>.</p>
+
+        <h2>Какие данные</h2>
+        <p>Я не&nbsp;собираю персональные данные. На&nbsp;сайте нет полей ввода, а&nbsp;значит, и&nbsp;нечего отправлять.</p>
+
+        <h2>Хостинг</h2>
+        <p>Сайт размещён на&nbsp;GitHub Pages (GitHub Inc., США), страницы отдаёт сеть доставки Fastly. При&nbsp;открытии страницы сервер получает технический запрос: ваш IP-адрес, время, запрошенный адрес и&nbsp;тип браузера. GitHub обрабатывает эти данные, чтобы доставить сайт и&nbsp;защитить его. Я&nbsp;их&nbsp;не&nbsp;собираю и&nbsp;не&nbsp;храню.</p>
+        <ul>
+          <li>Правовое основание: законный интерес в&nbsp;работе и&nbsp;защите публичного сайта (GDPR, ст.&nbsp;6(1)(f)).</li>
+          <li>Передача за&nbsp;пределы ЕС: GitHub находится в&nbsp;США. По&nbsp;его заявлению, он опирается на стандартные договорные положения и&nbsp;участвует в&nbsp;EU-U.S. Data Privacy Framework.</li>
+        </ul>
+        <p>Подробнее: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">политика конфиденциальности GitHub</a>.</p>
+
+        <h2>Третьи стороны</h2>
+        <p>Страница не&nbsp;обращается к&nbsp;сторонним серверам. Сторонних скриптов нет, шрифты системные, изображения и&nbsp;стили встроены в&nbsp;страницу.</p>
+
+        <h2>Хранилище в&nbsp;браузере</h2>
+        <p>Сайт не&nbsp;использует cookies, localStorage и&nbsp;другое хранилище. Ничего не&nbsp;остаётся на&nbsp;вашем устройстве.</p>
+
+        <h2>Ваши права</h2>
+        <p>По&nbsp;GDPR вы&nbsp;вправе запросить доступ к&nbsp;данным, их&nbsp;исправление, удаление, ограничение обработки и&nbsp;возразить против неё. Напишите мне через <a href="https://sinaida.eu/privacy/#contact-me">sinaida.eu/privacy</a>. Если данные хранит GitHub, я&nbsp;передам ваш запрос ему. Вы&nbsp;также можете в&nbsp;любое время пожаловаться в&nbsp;чешский надзорный орган, <a href="https://uoou.gov.cz" rel="noopener">Úřad pro ochranu osobních údajů</a>, или в&nbsp;орган своей страны.</p>
+      </main>
+
+      <footer>
+        <div class="wrap footer-grid">
+          <div>
+            <div class="brand">Противоречие</div>
+            <p style="color:var(--muted); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase;">© 2026 sin.ai.da</p>
+          </div>
+          <div class="footer-links">
+            <a href="index.html">На главную</a>
+            <a href="https://sinaida.eu">sinaida.eu</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script>window.scrollTo(0, 0);</script>
+  </body>
+</html>`;
+
 await rm(outDir, { recursive: true, force: true });
 await mkdir(outDir, { recursive: true });
 await writeFile(new URL("index.html", outDir), html);
 await writeFile(new URL("404.html", outDir), html);
+await writeFile(new URL("privacy.html", outDir), privacyHtml);
 
 console.log("GitHub Pages static site written to ./out");
